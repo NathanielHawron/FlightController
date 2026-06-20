@@ -1,0 +1,49 @@
+body {
+    font-family: Courier, monospace;
+    width: 98%;
+    margin-left: 1%;
+    color: #D7F75B;
+}
+  
+img, video, canvas {
+    display: block;
+    max-width: 60%;
+    max-height: 70vh;
+    min-width: 30%;
+    min-height: 30vh;
+    height: auto;
+    margin: auto;
+    border-radius: 10px;
+}
+
+body > p {
+  text-indent: 50px;
+}
+
+body > label,button,input {
+  position: relative;
+  width: 60%;
+  left: 20%;
+  margin-top:0;
+  margin-bottom: 1.5vh;
+}
+
+.imageContainer{
+    display: block;
+    margin: 4% auto;
+    border-radius: 10px;
+    overflow:hidden;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #48B;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #34A;
+  border-radius: 4px;
+}

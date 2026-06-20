@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Plan</title>
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <h2>Plan</h2>
+        <time datetime="2026-06-20">Date: 06/20/2026</time>
+        <p>There are five stages I am hoping to go through in this project:</p>
+        <ol>
+            <li>Quadcopter proof of concept</li>
+            <li>Fixed wing proof of concept</li>
+            <li>VTOL proof of concept</li>
+            <li>VTOL with payloads</li>
+            <li>Upscaled competition ready VTOL</li>
+        </ol>
+        <p>Additionally, there are some side things happening at the same time:</p>
+        <ul>
+            <li>Wiring diagram software</li>
+            <li>Custom modular ground station</li>
+        </ul>
+        <h3>Stage 1: Quadcopter proof of concept</h3>
+        <p>To start off with, I want to make sure my flight controller works. Since this is likely to go wrong many times, its probably best to go with something cheap and small. This way, when it inevietably crashes, its easy to move on to the next prototype, and if its below 250 grams, I can fly it without registering and without a license.</p>
+        <p>This will probably end up being a very simple whoop stlye drone, with a single cell LiPo, and if it makes sense, a custom MOSFET motor driver for brushed DC motors (otherwise, a 4 ESC board with BLDC motors will work). Apart from that, all thats required is the flight controller itself and a receiver.</p>
+        <p>At this stage, the flight controller will likely consist of a STM32 microcontroller (probably a cortex M4 to cut costs), an IMU, a buck converter, an LDO, and some method of storing logs. Additionally, I will have 6 PWM outputs, one for each motor and two spares for the next stage.</p>
+        <h3>Stage 2: Fixed Wing proof of concept</h3>
+        <p>This stage will be similar to the previous one, with a plane on the same scale as the small toy RC airplanes. For simplicity, it will probably end up being a single propeller with 4 control surfaces (yaw rudder, pitch elevator, and one roll aileron on each side), although I will consider doing two props if it makes it more stable.</p>
+        <p>Ideally, this would use the same flight controller and receiver as the first stage, except with new software to handle the new flight dynamics, and probably a new MOSFET board controlling two motors instead of 4 (unless I go with two boards with two MOSFETs each in the previous stage).</p>
+        <h3>Stage 3: VTOL proof of concept</h3>
+        <p>Finally, we get to the first VTOL stage. At this point, the flight controller will have been proven to work in both multirotor and fixed wing flight modes. The next step is to switch to BLDC motors and include transitioning logic.</p>
+        <p>At this point, I will need significantly more motor control outputs, since I have 4 rotors, a tilt mechanism (possibly two), and at least 4 fixed wing control surfaces (I will probably also want to include a flap to aide in efficiency and fast transition times), for a total of 12 actuators.</p>
+        <p>In addition, I will look into sensor fusion, where multiple redundant IMUs are used to improve accuracy. This will probably also mean upgrading the MCU to a cortex M7.</p>
+        <h3>Stage 4: VTOL with payloads</h3>
+        <p>Once the VTOL is flying and transitioning stably, its time to add payloads. This can include a camera with a VTX, a GPS, and probably a small watergun. To facilitate this, the flight controller will gain a companion processor, and possibly a secondary processor. The companion processor will likely be either a cortex M4 or M7, and will control the payloads and the flight controls (i.e. autonomous flight, and probably joystick input too). The secondary processor, if deemed necessary, will likely be able to provide additional IO ports, have transciever capabilities, and provide error checking and failsafes to the main processor.</p>
+        <h3>Stage 5: Upscaled competition ready VTOL</h3>
+        <p>With payloads in place, the only next step is to scale up to a competition ready drone. This means we want a takeoff weight of 15kg, space for payloads, a higher voltage (probably 6S or 12S), and many more output ports to control payloads, probaby including current limiters, various voltages (5V and 12V), and some relays.</p>
+        <p>This will probably be built to attempt AEAC tasks for whichever year it happenns to be when this project is in this stage, although I may choose an earlier one if it seems more adaptable.</p>
+        <h3>Other item 1: Wiring diagram software</h3>
+        <p>I have had poor experience in the past with wiring in relation to our competition drone. Our wiring quickly became a mess, and we had to keep checking all of our connections to make sure everything is correct and nothing will explode. This becomes increasingly stressfull when we have a mix of compliant and reverse polarity power connectors, nonstandard and inconsistent cable colors, and a constant need for more power connectors. Additionally, I have been scarred after plugging in a battery into an ESC that had a reversed connector, which caused a loud pop, some smoke, and a melted connector (so now I always check wire polarity too).</p>
+        <p>To combat this, I wanted to make a program that allows us to make a wiring diagram with enough detail that anyone, including non-electrical and newer members to fully wire the drone, while being easy to update and modify. This inclues having diagram like connections, graphics of each connector including connector and cable colors, and if theres time, a sanity checker that ensures voltages and currents are correct.</p>
+        <p>I am hoping that this one gets completed by the end of this summer, so its ready for when we start work on our drone.</p>
+        <h3>Other item 2: Custom modular ground station</h3>
+        <p>Since controllers are really expensive and seem to struggle with a large number of peripherals (only two joysticks!), and none of our laptops last very long, I thought it would make it easier if we had a suitcase with a custom controller including modular control inputs, a computer for running the ground station, and possibly a computer dedicated to receiving video.</p>
+        <p>With this ground station, we wouldn't be reliant on certain people always being present, and we could have as many joysticks as we want (one for thrust/yaw, one for pitch/roll, and one can move a camera around).</p>
+        <p>For the first three stages of this project, it is likely I will just make a custom controller, and start working on the whole suitcase idea once stage 4 is started, since there are no payloads until then.</p>
+        <script src="../image_zoom.js"></script>
+    </body>
+</html>
