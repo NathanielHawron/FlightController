@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="width:100%; height:100vh">
+    <head>
+        <meta charset="utf-8">
+        <title>Drone Simulator 2d Simulation</title>
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <h2>Drone Simulator 2d Simulation</h2>
+        <time datetime="2026-09-17">Date: 17/09/2026</time>
+        <p>This week, I wrote a simple simulator for the drone. Of course, imperfections like air, friction, and collisions were ignored. In this first test, I included 4 drones.</p>
+        <p>The first two (firebrick and goldenrod) are using the basic LQR controller, except with the f<sub>D</sub> put through a tanh function. This way, it cannot demand more turning than possible. However, it still isn't enough to prevent divergence with even small horizontal movements. Since the controller is linearized around an angle of 0&deg;, it gets worse as it approaches 90&deg;, and becomes inverted beyond that. Additionally, it thinks that horizontal acceleration is proportional to the angular velocity, so the larger the horizontal error, the more it wants to rotate (which leads it on its head, then spinning and falling forever).</p>
+        <p>To combat the capsizing, I made the second two drones (purple and dark-green). When these drones go beyond 45&deg;, they start mixing the command from the controller with a command to accelerate towards being upright. By the time it reaches 90&deg;, it is fully trying to rotate back to 0&deg;, even increasing the f<sub>T</sub> if it needs to (f<sub>D</sub> can only work well up to f<sub>T</sub> since if it is larger, one of the motors will get a negative power, which they cannot produce).</p>
+        <p>In this simulation, you can see that as the horizontal target distance increases, the first two drones drop farther before reaching the destination, until they start diverging at around 38m. The tilt limited drones, however, are able to converge up to around 130m. After this point, the error in horizontal position forces agressive turning, which even the tilt limiting is unable to counteract.</p>
+        <iframe src="./../demos/drone2d_0/index0.html" style="width:97vw; height:94vh"></iframe>
+        <p>The next improvement comes from linearizing around many points, which increases control accuracy farther from hover. In this simulation, the black and grey drones are the same as the previous drones (with grey having the angle limiter). The firebrick one uses linear interpolation between three k matrices at -45&deg;, 0&deg;, and 45&deg;, and the salmon one is the same thing with the tilt limiting. Yellow-green uses quadratic interpolation rather than linear interpolation, which means we should get smoother, more continuous control, and dark-green is the same with the tilt limiting.</p>
+        <iframe src="./../demos/drone2d_0/lqr_sweep.m.txt" class="script" data-fname="lqr_sweep.m" style="height:50vh;width:30vw;"></iframe>
+        <p>I found that the tanh applied to f<sub>D</sub> slowed performance here, and didn't seem to improve stability as much, so it isn't used on the interpolated controllers.</p>
+        <iframe src="./../demos/drone2d_0/index1.html" style="width:97vw; height:94vh"></iframe>
+        <script src="../image_zoom.js"></script>
+    </body>
+</html>

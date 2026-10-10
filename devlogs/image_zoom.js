@@ -27,3 +27,18 @@ for(let i=0;i<images.length;++i){
     image.onmousemove = (event)=>{zoomImage(event,image)};
     image.onmouseleave = (event)=>{resetImage(event,image)};
 }
+
+for(let e of document.getElementsByClassName("indeterminate")){
+    e.indeterminate = true;
+}
+
+for(script of document.getElementsByClassName("script")){
+    script.onload = ()=>{
+        let body = script.contentDocument.children[0].children[1];
+        let downloadButton = document.createElement("a");
+        downloadButton.href = script.src;
+        downloadButton.download = script.dataset.fname ?? script.src;
+        downloadButton.innerHTML = "<button>Download</button>";
+        body.prepend(downloadButton);
+    };
+}

@@ -96,10 +96,16 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #FFF;
+    background-color: #48B;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #000;
+    background-color: #34A;
     border-radius: 4px;
+}
+
+.indicator{
+    position:absolute;
+    right:0px;
+    top:0px;
 }

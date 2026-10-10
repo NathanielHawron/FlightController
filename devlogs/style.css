@@ -2,18 +2,34 @@ body {
     font-family: Courier, monospace;
     width: 98%;
     margin-left: 1%;
+    margin-right: 1%;
     color: #D7F75B;
 }
   
 img, video, canvas {
     display: block;
-    max-width: 60%;
+    max-width: 80%;
     max-height: 70vh;
-    min-width: 30%;
-    min-height: 30vh;
+    min-width: 20%;
+    min-height: 20vh;
     height: auto;
-    margin: auto;
+    justify-self: center;
+    margin:0;
     border-radius: 10px;
+}
+.script{
+    display: block;
+    max-width: 80%;
+    max-height: 100vh;
+    min-width: 20%;
+    min-height: 10vh;
+    height: auto;
+    margin: 0;
+    border-radius: 10px;
+}
+
+iframe{
+  justify-self: center;
 }
 
 body > p {
@@ -21,11 +37,7 @@ body > p {
 }
 
 body > label,button,input {
-  position: relative;
-  width: 60%;
-  left: 20%;
-  margin-top:0;
-  margin-bottom: 1.5vh;
+
 }
 
 .imageContainer{
