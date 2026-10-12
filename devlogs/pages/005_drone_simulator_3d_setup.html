@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="width:100%; height:100vh">
+    <head>
+        <meta charset="utf-8">
+        <title>Drone Simulator 3d setup</title>
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <h2>Drone Simulator 3d setup</h2>
+        <time datetime="2026-11-10">Date: 10/11/2026</time>
+        <p>This week's goal was to get the drone simulation working in 3d. I started by taking one of the example projects from my graphics library, removing unecessary parts, then creating a drone class.</p>
+        <p>One of the first things I did once the drones were being rendered was work on setting up the ground. I took an implementation of OpenSimplex noise in Java, and ported it to c++ with one improvement: I used a hash of the coordinates and seed too generate a vector at each point rather than using a lookup tabe. This allows repeatable variation in the noise (i.e. there are 2<sup>64</sup>> possible heightmaps that don't repeat, and the same seed will provide the same heightmap).</p>
+        <p>Now getting to the important stuff: physics. For now, I will model:</p>
+        <ul>
+            <li>Mass & Center of Mass</li>
+            <li>Drag in 3 directions</li>
+            <li>Prop RPM</li>
+            <li>Prop drag (i.e. yawing torque)</li>
+            <li>Gravity</li>
+        </ul>
+        <p>This leaves a few things to implement in the future:</p>
+        <ul>
+            <li>Prop inertia (i.e. resistance to rotation caused by props spinning)</li>
+            <li>Cros-coupled inertia (i.e. inertia caused by spinning)</li>
+            <li>Body aware drag (i.e. not assuming its a flat plate in each direction)</li>
+            <li>Air density</li>
+            <li>Lift</li>
+            <li>Non-prop propulsion</li>
+            <li>Actuation (i.e. Tiltrotor VTOL)</li>
+            <li>Battery / fuel</li>
+            <li>Voltage Sag</li>
+            <li>Collisions (probably going to be explode on contact since I've never seen a good physics response to a drone hitting things, since it is a very complicated subject)</li>
+            <li>Wind</li>
+        </ul>
+        <p>Also, I will eventually give the drones better models and textures, but for now they are all going to be black rectangular prisms.</p>
+        <p>In addition to the actual physics, the drone also needs a controller. Real drones have to guess where they are in space, since they get that info from sensors, so I started implementing some calculations to provide sensor readings just like real sensors. For now, I just store the acceleration relative to the body, and give it to my controller as a 16 bit integer, scaled by some multiple of gravity. This is based off of the BMI270 chip, which is pretty much the only affordable IMU right now. For acceleration, it gives you a 16 bit number for each axis, and it's range can be configured from +-2g to +-16g. Similarly, it can provide a 16 bit number for each axis of rotational velocity, configured between +-125dps and +-2000dps. However, I will implement the gyroscope once I start working on the state estimation, for now I will just use the actual state.</p>
+        <p>Finally, the controller needs a control mode. There are many modes, each with their own purpose, and I will attempt to implement all of them eventually. While I do plan on implementing them for planes, helicopters, and hybrid UAVs, I will start by focusing on a multirotor drone. To easily extend it for any even number of rotors, I will be using differential control. This just means my controller will provide a total, yaw, pitch, and roll force. These parameters can be distributed among the motors. For example, upward force is just the sum of all upward facing propeller powers, and yawing torque is just the sum of clockwise propellers - sum of counterclockwise propellers. Of course, the controller outputs desired accelerations, so each control gets multiplied by mass and divided by number of motors. For pitching and rolling, the force gets distributed between the front/back motors and the left/right motors, based on their distance from the center of mass in that direction (very easy for a quadcopter, but it becomes more complicated with more props)</p>
+        <p>As for the modes, I will implement:</p>
+        <table>
+            <tr>
+                <th>Mode</th>
+                <th>Control Type</th>
+                <th>Thrust Control</th>
+                <th>Yaw Control</th>
+                <th>Pitch/Roll Control</th>
+                <th>Controls are 0</th>
+                <th>Waypoints</th>
+            </tr>
+            <tr>
+                <td>MANUAL</td>
+                <td>Pilot</td>
+                <td>Direct</td>
+                <td>Direct</td>
+                <td>Direct</td>
+                <td>-</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>ACRO</td>
+                <td>Pilot</td>
+                <td>Velocity</td>
+                <td>Angular Velocity</td>
+                <td>Angular Velocity</td>
+                <td>-</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>HORIZON</td>
+                <td>Pilot</td>
+                <td>Velocity</td>
+                <td>Angular Velocity</td>
+                <td>Angular Velocity</td>
+                <td>Level</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>STABILIZE</td>
+                <td>Pilot</td>
+                <td>Velocity</td>
+                <td>Angle</td>
+                <td>Angle</td>
+                <td>Level</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>ALT_HOLD</td>
+                <td>Pilot</td>
+                <td>Velocity</td>
+                <td>Velocity</td>
+                <td>Velocity</td>
+                <td>Level & hold altitude</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>POS_HOLD</td>
+                <td>Pilot</td>
+                <td>Velocity</td>
+                <td>Velocity</td>
+                <td>Velocity</td>
+                <td>Level & hold position</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>LOITER</td>
+                <td>Pilot</td>
+                <td>Velocity</td>
+                <td>Velocity</td>
+                <td>Velocity</td>
+                <td>Level & hold position</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>WAYPOINT</td>
+                <td>Ground Station</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Ordered Waypoints</td>
+            </tr>
+            <tr>
+                <td>GUIDED</td>
+                <td>Ground Station</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Instantaneous Waypoints</td>
+            </tr>
+            <tr>
+                <td>Circle</td>
+                <td>Ground Station</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Auto-generated</td>
+            </tr>
+            <tr>
+                <td>LAND</td>
+                <td>Drone</td>
+                <td>Descent Speed</td>
+                <td>-</td>
+                <td>0</td>
+                <td>-</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>RTH / RTH</td>
+                <td>Drone</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Land Location</td>
+            </tr>
+        </table>
+        <script src="../image_zoom.js"></script>
+    </body>
+</html>

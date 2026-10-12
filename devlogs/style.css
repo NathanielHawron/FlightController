@@ -4,6 +4,7 @@ body {
     margin-left: 1%;
     margin-right: 1%;
     color: #D7F75B;
+    padding-bottom: 10vh;
 }
   
 img, video, canvas {
@@ -45,6 +46,16 @@ body > label,button,input {
     margin: 4% auto;
     border-radius: 10px;
     overflow:hidden;
+}
+
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+  padding-left:1vw;
+  padding-right:1vw;
+}
+table{
+  justify-self: center;
 }
 
 ::-webkit-scrollbar {
