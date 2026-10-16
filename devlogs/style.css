@@ -70,3 +70,10 @@ table{
   background-color: #34A;
   border-radius: 4px;
 }
+
+input[type="checkbox"]:checked{
+  accent-color: #0D8;
+}
+input[type="checkbox"]:indeterminate{
+  accent-color: #80D;
+}

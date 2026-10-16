@@ -61,7 +61,7 @@ main {
     height: 40px;
 }
 
-#navigation button {
+#navigation button:not(.dynamic):not(.offtopic) {
     padding: 2%;
     width: 100%;
     border: none;
@@ -72,13 +72,55 @@ main {
     height: 100%;
 }
 
-#navigation button:hover {
+#navigation button:not(.dynamic):not(.offtopic):hover {
     background-color: #0D00A4;
     color: #FFF;
 }
 
-#navigation button.selected {
+#navigation button:not(.dynamic):not(.offtopic).selected {
     background-color: #D7F75B;
+    color: #11141A;
+}
+
+/* Button types */
+.dynamic {
+    padding: 2%;
+    width: 95%;
+    border: none;
+    border-radius: 5px;
+    background-color: #3EB278;
+    color: #FFF;
+    cursor: pointer;
+    height: 100%;
+    float: right;
+}
+.dynamic:hover {
+    background-color: #068000;
+    color: #FFF;
+}
+
+.dynamic.selected {
+    background-color: #a6f75b;
+    color: #11141A;
+}
+.offtopic {
+    padding: 2%;
+    width: 75%;
+    border: none;
+    border-radius: 5px;
+    background-color: #B23E78;
+    color: #FFF;
+    cursor: pointer;
+    height: 100%;
+    float:right;
+}
+.offtopic:hover {
+    background-color: #813;
+    color: #FFF;
+}
+
+.offtopic.selected {
+    background-color: #f7d05b;
     color: #11141A;
 }
 

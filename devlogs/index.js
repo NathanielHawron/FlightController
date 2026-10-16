@@ -34,6 +34,9 @@ for(const page of pages){
         page.indicator = 0;
         indicator.hidden = true;
     }
+    if(page.bclass != undefined){
+        button.classList.add(page.bclass);
+    }
 
     buttonList.appendChild(li);
 }

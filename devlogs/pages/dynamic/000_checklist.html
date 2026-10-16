@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Checklist</title>
+        <link rel="stylesheet" type="text/css" href="../../style.css">
+    </head>
+    <body>
+        <h2>Checklist</h2>
+        <time datetime="2026-06-20">Last Update: 16/10/2026</time>
+        <p>There are 11 planned stages to this project:</p>
+        <ol>
+            <li><input type="checkbox" inert checked>Quadcopter simulator 2d</li>
+            <li><details>
+                <summary><input type="checkbox" inert class="indeterminate">Quadcopter controller simulator 2d</summary>
+                    <table>
+                        <tr>
+                            <th>Basic</th>
+                            <th>Linear Angle<br>Correction</th>
+                            <th>Dynamic Angle<br>Correction</th>
+                            <th>Optimized <br>Cost Matrices</th>
+                            <th>Controller Type</th>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" inert checked></td>
+                            <td><input type="checkbox" inert checked></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td>Linearized hover LQR</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" inert checked></td>
+                            <td><input type="checkbox" inert checked></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td>3 point linearly interpolated LQR</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" inert checked></td>
+                            <td><input type="checkbox" inert checked></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td>3 point quadratically interpolated LQR</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td>5 point linearly interpolated LQR</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td>5 point quadratically interpolated LQR</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td>Linearized hover LQI</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td><input type="checkbox" inert></td>
+                            <td>Cascade LQR (PID controlled horizontal velocity)</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" inert></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td><input type="checkbox" inert></td>
+                            <td>Cascade LQR (PID controlled angle)</td>
+                        </tr>
+                    </table>
+                </ul>
+            </details></li>
+            <li><input type="checkbox" inert checked>Quadcopter simulator 3d</li>
+            <li><details>
+                <summary><input type="checkbox" inert class="indeterminate">Quadcopter Controller 3d</summary>
+                <ul>
+                    <li><input type="checkbox" inert>MANUAL</li>
+                    <li><input type="checkbox" inert>ACRO</li>
+                    <li><input type="checkbox" inert>HORIZON</li>
+                    <li><input type="checkbox" inert>STABILIZE</li>
+                    <li><input type="checkbox" inert>ALT_HOLD</li>
+                    <li><input type="checkbox" inert>POS_HOLD</li>
+                    <li><input type="checkbox" inert>LOITER</li>
+                    <li><input type="checkbox" inert>WAYPOINT</li>
+                    <li><input type="checkbox" inert>GUIDED</li>
+                    <li><input type="checkbox" inert>CIRCLE</li>
+                    <li><input type="checkbox" inert>LAND</li>
+                    <li><input type="checkbox" inert>RTH/RTL</li>
+                </ul>
+            </details></li>
+            <li><input type="checkbox" inert>Quadcopter proof of concept</li>
+            <li><input type="checkbox" inert>Fixed wing simulator</li>
+            <li><input type="checkbox" inert>Fixed wing controller simulator</li>
+            <li><input type="checkbox" inert>Fixed wing proof of concept</li>
+            <li><input type="checkbox" inert>VTOL proof of concept</li>
+            <li><input type="checkbox" inert>VTOL with payloads</li>
+            <li><input type="checkbox" inert>Upscaled competition ready VTOL</li>
+        </ol>
+        <p>Additionally, there are some side things happening at the same time:</p>
+        <ul>
+            <li><input type="checkbox" inert class="indeterminate">Wiring diagram software</li>
+            <li><input type="checkbox" inert>Custom modular ground station</li>
+        </ul>
+
+        <script src="../image_zoom.js"></script>
+    </body>
+</html>
