@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   viewBox="-41.1324865 -120 161.1324865 161.1324865"
+   version="1.1"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   sodipodi:docname="skew_transform_inverse.svg"
+   id="svg2"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#000000;stroke-width:1;fill-opacity:0;stroke:#88B;stroke-opacity:1"
+       width="100"
+       height="100"
+       x="0"
+       y="-100"
+       id="rect1" />
+    <path
+       style="fill:#000000;fill-opacity:0;stroke:#8B8;stroke-width:1;stroke-opacity:1"
+       d="M 0,0 -21.1324865,-78.8675135 57.7350269,-57.7350269 78.8675135,21.1324865 Z"
+       id="path2" />
+    <circle
+       style="fill:#88B;fill-opacity:1;stroke:#888;stroke-width:1"
+       cx="76.6025404"
+       cy="-96.6025404"
+       r="5" />
+    <circle
+       style="fill:#8B8;fill-opacity:1;stroke:#888;stroke-width:1"
+       cx="40"
+       cy="-60"
+       r="5" />
+    <path
+       style="fill:#000000;fill-opacity:0;stroke:#888;stroke-width:1;stroke-dasharray:2.00315, 6.00945;stroke-dashoffset:100.157"
+       d="M 0,0 57.7350269,-57.7350269"
+       id="path3" />
+    <circle
+       style="fill:#888;fill-opacity:1;stroke:#888;stroke-width:1"
+       cx="0"
+       cy="0"
+       r="5" />
+    <circle
+       style="fill:#888;fill-opacity:1;stroke:#888;stroke-width:1"
+       cx="-21.1324865"
+       cy="-78.8675135"
+       r="5" />
+    <circle
+       style="fill:#888;fill-opacity:1;stroke:#888;stroke-width:1"
+       cx="57.7350269"
+       cy="-57.7350269"
+       r="5" />
+    <path
+       style="fill:#000000;fill-opacity:0;stroke:#888;stroke-width:1;stroke-opacity:1"
+       d="M 40,-60 0,0 M 40,-60  57.7350269,-57.7350269 M 40,-60 -21.1324865,-78.8675135 Z"
+       id="path4" />
+  </g>
+</svg>

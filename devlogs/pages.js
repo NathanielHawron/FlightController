@@ -28,6 +28,6 @@ const pages = [
     new Page("003_drone_simulator_2d_math","Drone Simulator 2d Math",0),
     new Page("004_drone_simulator_2d_simulation","Drone Simulator 2d Simulation",0),
     new Page("005_drone_simulator_3d_setup","Drone Simulator 3d Setup",0),
-    //new Page("offtopic/000_simplex_noise","Simplex Noise",0,"offtopic"),
-    //new Page("005_drone_simulator_3d","Drone Simulator 3D",0),
+    new Page("offtopic/000_opensimplex2","Simplex Noise",0,"offtopic"),
+    new Page("offtopic/001_fractal_noise","Fractal Noise",0,"offtopic"),
 ]

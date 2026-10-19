@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Fractal Noise</title>
+        <link rel="stylesheet" type="text/css" href="../../style.css">
+    </head>
+    <body>
+        <h2>Fractal Noise</h2>
+        <time datetime="2026-10-19">Date: 10/19/2026</time>
+        <p>If we sample a larger area of simplex noise, we start noticing an issue: it looks flat and uninteresting.</p>
+        <img src="./../../images/offtopic/001/30x30_patch.png">
+        <p>The solution is simple: Fractal Noise. Here, fractal means repeating smaller and smaller. We can define it simply:</p>
+        <img src="./../../images/offtopic/001/fractal_noise_definition.png">
+        <p>It should be noted that the derivatives are linear, so the same can be done for them. The important parameters are count (how many octaves (levels) of noise to use), lacunarity (scale of input components for each octave), and persistance (scale of amplitude for each octave). It is standard to set l=2 and p=0.5, and c is up to preference, depending on the application (there are even cases where you want only 1!). Here is a comparison between 1, 2, 4, and 8 octaves (note that I additionally used a different seed for each octave, to prevent the center from looking exagerated, and that light is coming from a random direction, so they look dark in different directions, but higher octaves will make it darker from above since there are less flat regions):</p>
+        <table>
+            <tr>
+                <th>Parameters</th><th>1 octave</th><th>2 octaves</th><th>4 octaves</th><th>8 octaves</th>
+            </tr>
+            <tr>
+                <td>Amplitude:1<br>Scale:1<br>View:top</td>
+                <td><img src="./../../images/offtopic/001/patches/1_1_1_top.png"></td>
+                <td><img src="./../../images/offtopic/001/patches/2_1_1_top.png"></td>
+                <td><img src="./../../images/offtopic/001/patches/4_1_1_top.png"></td>
+                <td><img src="./../../images/offtopic/001/patches/8_1_1_top.png"></td>
+            </tr>
+            <tr>
+                <td>Amplitude:0.5<br>Scale:0.25<br>View:~30&deg;</td>
+                <td><img src="./../../images/offtopic/001/patches/1_05_025_30deg.png"></td>
+                <td><img src="./../../images/offtopic/001/patches/2_05_025_30deg.png"></td>
+                <td><img src="./../../images/offtopic/001/patches/4_05_025_30deg.png"></td>
+                <td><img src="./../../images/offtopic/001/patches/8_05_025_30deg.png"></td>
+            </tr>
+        </table>
+        <p>Past 8 octaves, you start getting diminishing returns, and computing times become noticable (the 8 octave one started taking multiple seconds). This is in part due to increasing the resolution of the mesh so the new octaves become visible (otherwise, it starts looking low-poly).</p>
+        <p>To keep the result normalized, you can divide by this sum:</p>
+        <img src="./../../images/offtopic/001/fractal_sum.png">
+        <p>In this case, it doesn't matter if its normalized, but if you were drawing the heightmap as an image (i.e. instead of high, useing brightness), then you would want it normalized. You can use 2 as an approximation if you don't want to calculate the actual sum.</p>
+        <p>The next problem is that a large region of this noise starts looking repetative, even with multiple octaves.</p>
+        <img src="./../../images/offtopic/001/large_noisemap.png">
+        <p>This can also be solved fairly easily, but takes more of an artistic direction. Mostly, it involves making multiple noisemaps, and doing some combination of adding and multiplying them. To maintain the normals, lets calculate the derivative of the product of two functions:</p>
+        <img src="./../../images/offtopic/001/product_derivative.png">
+        <p>Applying this to two noisemaps, one with 4 levels and 0.1 scale, the other with 1 level and 0.01 scale, gives us:</p>
+        <img src="./../../images/offtopic/001/large_noisemap_product.png">
+        <p>Here, I multiplied a noisemap by itself to produce a mountain range, and multiplied that by another truncated noisemap (remapped from [-1, 1] to [-0.5,1.5], then set anything negative to 0) to decide where the mountains get placed.</p>
+        <img src="./../../images/offtopic/001/large_noisemap_mountain.png">
+        <p>Appling both together:</p>
+        <img src="./../../images/offtopic/001/large_noisemap_sop.png">
+        <p>Similarly, rivers can be made:</p>
+        <img src="./../../images/offtopic/001/large_noisemap_rivers.png">
+        <p>And combined:</p>
+        <img src="./../../images/offtopic/001/large_noisemap_mr.png">
+        <p>Replacing the texture with some height based shading, and tweaking the mountains:</p>
+        <img src="./../../images/offtopic/001/large_noisemap_shaded.png">
+        <script src="../../image_zoom.js"></script>
+    </body>
+</html>
