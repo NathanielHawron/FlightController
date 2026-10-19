@@ -1,7 +1,8 @@
 const buttonList = document.getElementById("navigation").children[0];
 const pageDisplay = document.getElementById('pageDisplay');
 
-for(const page of pages){
+for(const p in pages){
+    const page = pages[p];
     let li = document.createElement("li");
     let button = document.createElement("button");
     let indicator = document.createElement("input");
@@ -21,6 +22,7 @@ for(const page of pages){
     }
     
     button.innerText = page.buttonLabel;
+    button.id = page.filename;
     button.onclick = function(){
         pageDisplay.src = "./pages/"+page.filename+".html";
         window.location.hash=page.filename;
