@@ -8,6 +8,13 @@
     <body>
         <h2>Drone Simulator 2d Math</h2>
         <time datetime="2026-09-16">Date: 16/09/2026</time>
+        <details>
+            <summary>Updates (Rev 1)</summary>
+            <table>
+                <tr><th>Rev</th><th>Date</th><th>Description</th></tr>
+                <tr><td>1</td><td><time datetime="2026-10-21">21/10/2026</time></td><td>Corrected notation in equations</td></tr>
+            </table>
+        </details>
         <p>This week, I worked on making a drone simulator in JavaScript to test out a simple LQR controller. To keep it simple, this drone is two dimensional.</p>
         <p>To make the controller, I started by drawing out the control system, which basically shows how my state evolves over time and how I control the system. Here, x is my state, y is the output, r is the reference (or target), u is the control input, and e is the error. The A matrix describes how my state affects the dynamics, and B describes how my input affects the dynamics. C and D show how my state and inputs affect the output. Note that by definition, x=&int;x&#775;+x<sub>0</sub>.</p>
         <img src="./../images/003/system_state_formula.png" style="height:20vh">
@@ -19,7 +26,7 @@
         <p>Then, same thing for u, giving us B, except we completely ignore the x&#775; component since they're all constant (i.e. no f<sub>T</sub> or f<sub>D</sub> components).</p>
         <img src="./../images/003/jacobianB.png" style="height:30vh">
         <p>Finally, we replace f<sub>T</sub> in the A matrix so that the drone stays level. By setting it to 9.8/cos(a), we are telling the system that we need to make sure that the vertical component of the thrust is enough to counter gravity. One important issue to notice here is that as our angle deviates from 0, we approach infinite total thrust and 0 authority over vertical acceleration, and the system becomes less controllable (i.e. we cannot calculate a K matrix at 90 degrees). Instead, I will probably start blending the controller with a linear or step controller to avoid going past 75&deg;. The only reason to pass this limit, as far as I can tell, is for freestyle acrobatics (like doing loops), so we don't generally care about this range anyways.</p>
-        <img src="./../images/003/jacobianAgravity.png">
+        <img src="./../images/003/linearized_system.png">
         <p>Now that we have the A and B matrices, its time to talk about how to find K. This is the easiest part of this project, we give it to a solver, which solves the algebraic ricotti equations. It does some magic to convert A and B into K, with some tunable parameters in the Q and R matrices. Q and R are cost matrices, which tell us how expensive a certain parameter is. Q is the cost of an error on x, while R is the cost of using a control u. In this case, I just used I for both, since I want to get the controller working first, tuning can happen later. In particular, applying a higher cost to f<sub>T</sub> can tell the system to use less throttle, which can potentially save battery if we don't need it to approach the destination as quickly.</p>
         <p>I used a simple octave script to generate my k matrix. The plan is for the drone to be 2kg, have 0.2kg*m<sup>2</sup> of inertia, and have 0.5m between the center of mass and the props, so the s<sub>D</sub> factor is 0.2/0.5=2.5. For linear dimensions, I will normalize for acceleration, so we don't have to worry about mass in the controller.</p>
         <iframe src="./../demos/drone2d_0/lqr.m.txt" class="script" data-fname="lqr.m" style="height:70vh;"></iframe>
